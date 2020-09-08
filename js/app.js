@@ -24,7 +24,7 @@ Horned.prototype.render = function() {
 
   $newSection.find('h2').text(this.title);
   $newSection.find('p').text(this.description);
-  $newSection.find('image').attr('src', this.imagePath);
+  $newSection.find('img').attr('src', this.imagePath);
   
   $('main').append($newSection);
 
