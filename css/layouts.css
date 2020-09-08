@@ -23,4 +23,9 @@ p {
 }
 h1 {
   font-size: xx-large;
+  margin-left: 10px;
+}
+
+select {
+  margin-left: 10px;
 }
