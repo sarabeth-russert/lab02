@@ -1,0 +1,26 @@
+img {
+  border: 1px solid black;
+  width: 200px;
+  height: 200px;
+  border-radius: 10px;
+  box-shadow: 5px 10px #888888;
+  margin-top: 10px;
+}
+section {
+  margin-left: 20px;
+  float: left;
+}
+h2 {
+  padding: 3px;
+  margin-top: 70px;
+  width: 200px;
+  height: 40px;
+}
+p {
+  margin-top: 20px;
+  width: 200px;
+  height: 80px;
+}
+h1 {
+  font-size: xx-large;
+}
