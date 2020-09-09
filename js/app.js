@@ -7,7 +7,6 @@ $.ajax('data/page-1.json', {method: 'GET', dataType: 'JSON'})
   .then(animals => {
     animals.forEach(hornedBeast => {
       new HornedAnimal(hornedBeast);
-      //beast.render();
     })
     hornedBeastArray.forEach(beast => {
       $('main').append(beast.render());
@@ -25,18 +24,6 @@ function HornedAnimal(object){
 
   hornedBeastArray.push(this);
 }
-
-// HornedAnimal.prototype.render = function(){
-//   const template = $('#photo-template').html();
-
-//   const $newSection = $(`<section class="${this.keyword}">${template}</section>`);
-
-//   $newSection.find('h2').text(this.title);
-//   $newSection.find('p').text(`${this.description}. Number of horns ${this.horns}`);
-//   $newSection.find('img').attr('src', this.image);
-
-//   $('main').append($newSection);
-// }
 
 HornedAnimal.prototype.render = function() {
   let template = $('#photo-template').html();
@@ -68,4 +55,34 @@ function handleChange(){
 
 }
 
+function handleSort(){
+  let selected_value = $('input:checked').val();
+  if (selected_value === 'title') {
+    hornedBeastArray.sort((a, b) => {
+      a = a.title.toLowerCase();
+      b = b.title.toLowerCase();
+      if(a > b) {
+        return 1;
+      } else if (a < b){
+        return -1;
+      } else {
+        return 0;
+      }
+    });
+  } else {
+    hornedBeastArray.sort((a, b) => {
+      a = a.horns;
+      b = b.horns;
+      return a - b
+    });
+  }
+
+  $('main').empty();
+  hornedBeastArray.forEach(beast => {
+    $('main').append(beast.render());
+  });
+}
+
 $('select').on('change', handleChange);
+$('input').on('click', handleSort);
+
