@@ -2,6 +2,7 @@ body {
   background-color: rgb(224, 205, 244);
   font-family: "Grandstander", cursive;
   width: 960px;
+  margin-top: 10px;
 }
 
 h2 {
