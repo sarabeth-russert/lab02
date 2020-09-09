@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@200&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layouts.css">
+  <link rel="stylesheet" href="css/modules.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Gallery of Horns</title>
+  <script id="photo-template" type="text/x-tmpl-mustache">
+    <div class={{keyword}}>
+      <h2>{{title}}</h2>
+      <img src={{image}}
+      <p>{{description}}</p>
+    </div>
+  </script>
+</head>
+<body>
+  <header>
+    <h1>The Gallery of Horns</h1>
+    <select>
+      <option value="default">Filter by Keyword</option>
+    </select>
+  </header>
+  <main>
+  </main>
+  <footer>
+  </footer>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://unpkg.com/mustache@latest"></script>
+  <script src="js/app2.js"></script>
+</body>
+</html>
