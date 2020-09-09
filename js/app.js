@@ -1,54 +1,90 @@
-'use strict'
+'use strict';
 
-const hornArray = [];
+// Goal 1: we need to get the data from page-1.json and display it to the page
 
-$.ajax('data/page-1.json', { method: 'GET', dataType: 'JSON' })
-  .then(hornInfo => {
-    hornInfo.forEach(horn => {
-      new Horn(horn).render();
+const uniqueKeywordArray = [];
+const hornedBeastArray = [];
+
+$.ajax('data/page-1.json', {method: 'GET', dataType: 'JSON'})
+  .then(animals => {
+    animals.forEach(hornedBeast => {
+      const beast = new Unicorn(hornedBeast);
+      beast.render();
     })
+    generateUniqueKeywords();
+    generateDropdown();
   })
-  .then(() => Horn.dropDown());
 
-function Horn(object) {
-  this.imgUrl = object.image_url
-  this.title = object.title
-  this.description = object.description
-  this.keyword = object.keyword
-  this.horns = object.horns
-  hornArray.push(this)
+function Unicorn(object){
+  this.image = object.image_url;
+  this.title = object.title;
+  this.description = object.description;
+  this.keyword = object.keyword;
+  this.horns = object.horns;
+
+  hornedBeastArray.push(this);
 }
 
-Horn.prototype.render = function () {
+Unicorn.prototype.render = function(){
+  // get the  html inside the photo template section
   const template = $('#photo-template').html();
-  const $newSection = $(`<section id="${this.keyword}">${template}</section>`);
-  $newSection.find('h2').text(this.title)
-  $newSection.find('p').text(` ${this.description}. Number of horns ${this.horns}`);
-  $newSection.find('img').attr('src', this.imgUrl);
-  $newSection.find('img').attr('title', this.title)
+
+  // fill a new section with the template
+  const $newSection = $(`<section class="${this.keyword}">${template}</section>`);
+
+  // access the new section
+  $newSection.find('h2').text(this.title);
+  $newSection.find('p').text(`${this.description}. Number of horns ${this.horns}`);
+  $newSection.find('img').attr('src', this.image);
+
   $('main').append($newSection);
 }
 
-Horn.dropDown = () => {
-  let tempArray = [];
-  hornArray.forEach(value => {
-    if (!tempArray.includes(value.keyword)) {
-      tempArray.push(value.keyword);
+  // need a render method - prototype - that uses templates to render our object instances
+
+
+// Goal 2: we need to filter the images when a user clicks on a keyword in the dropdown menu
+  // I need a list of UNIQUE keywords
+
+function generateUniqueKeywords(){
+  // loop over my hornedBeastArray and look at all the keywords
+  // if the keyword is IN the uniqueKeywordArray, I'm going to do nothing
+  // if it isn't, I'm going to push it into it
+  hornedBeastArray.forEach(beast => {
+    if(!uniqueKeywordArray.includes(beast.keyword)){
+      uniqueKeywordArray.push(beast.keyword);
     }
   })
-  tempArray.forEach(value => {
-    const $newOptionTag = $(`<option value="${value}">${value}</option>`);
-    $('select').append($newOptionTag);
+
+  // for(let i=0; i<hornedBeastArray.length; i++){
+  //   if(!uniqueKeywordArray.includes(hornedBeastArray[i].keyword)){
+
+  //   }
+  // }
+}
+
+function generateDropdown(){
+  // loop through uniqueKeywords
+  // create an option tag
+  // fill it with the value and text
+  // and append
+  uniqueKeywordArray.forEach(keyword => {
+    // make a new option tag
+    const $newDropdownItem = $('<option></option>');
+    // add a keyword value
+    $newDropdownItem.attr('value', keyword);
+    // add the keyword as the text
+    $newDropdownItem.text(keyword);
+    // append it to the text
+    $('select').append($newDropdownItem);
   })
 }
 
-$('select').on('change', handler);
-function handler(event) {
+function handleChange(){
+
   $('section').hide();
-  hornArray.forEach((object) => {
-    if(event.target.value === object.keyword) {
-      $(`section[id = ${object.keyword}]`).show();
-    }
-  });
+  $(`section[class=${this.value}]`).show();
+
 }
 
+$('select').on('change', handleChange);
